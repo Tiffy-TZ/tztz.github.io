@@ -1,0 +1,614 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>重庆市116路公交线网优化方案</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: "微软雅黑"; line-height: 1.6; max-width: 1200px; margin: 0 auto; padding: 20px }
+        section { margin-bottom: 40px; border-bottom: 1px solid #eee; padding: 20px 0 }
+        h2 { color: #2c3e50; border-left: 5px solid #3498db; padding-left: 10px }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0 }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left }
+        .chart-container { width: 800px; margin: 20px auto }
+    </style>
+</head>
+<body>
+
+<!-- 线路现状分析 -->
+<section>
+    <h2>一、线路现状分析</h2>
+    
+    <h3>1. 基础信息</h3>
+    <table>
+        <tr><th>线路类型</th><td>双向环形（上行13站，下行11站）</td></tr>
+        <tr><th>运营时间</th><td>上行 07:00-20:00 | 下行 06:30-19:30</td></tr>
+        <tr><th>全程距离</th><td>约10.6公里（上行）/1.5公里（下行）</td></tr>
+        <tr><th>发车间隔</th><td>计划30分钟/班，实际40-60分钟</td></tr>
+    </table>
+
+<!-- 新增重庆116路地图链接 -->
+    <div class="map-link">
+        <h4>重庆116路实时公交地图</h4>
+        <a href="https://map.baidu.com/search/116%E8%B7%AF/@11861033.956946777,3420830.735,15.41z?querytype=s&da_src=shareurl&wd=116%E8%B7%AF&c=132&src=0&wd2=%E9%87%8D%E5%BA%86%E5%B8%82&pn=0&sug=1&l=13&b=(11844832,3407131;11889376,3433819)&from=webmap&biz_forward=%7B%22scaler%22:2,%22styles%22:%22pl%22%7D&sug_forward=ae3b91c444b3c050da2f284c&device_ratio=2" 
+           target="_blank" 
+           style="color: #3498db; text-decoration: none; font-weight: bold;">
+            🚌 点击查看实时线路地图（百度地图）
+        </a>
+        <p style="color: #666; margin-top: 8px;">* 外部链接将跳转至百度地图查看详细信息</p>
+    </div>
+
+    <!-- 原有路线图展示 -->
+    <div style="margin-top: 20px; display: flex; gap: 20px;">
+        <div>
+            <h4>上行路线图（山千院-融侨）</h4>
+            <img src="D:\HuaweiMoveData\Users\86187\Desktop\公共交通与规划\山千院-融侨.png""
+                 alt="上行路线图" 
+                 style="width: 500px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+        <div>
+            <h4>下行路线图（融侨-山千院）</h4>
+            <img src="D:\HuaweiMoveData\Users\86187\Desktop\公共交通与规划\融侨-山千院.png"" 
+                 alt="下行路线图" 
+                 style="width: 500px; border: 1px solid #ddd; border-radius: 4px;">
+        </div>
+    </div>
+    
+    <h3>2. 核心问题</h3>
+    <ul>
+        <li>高峰拥堵：运营速度＜10km/h，发车间隔延长至20分钟以上</li>
+        <li>平峰空驶：载客率＜50%，间隔达40-60分钟</li>
+        <li>夜间服务缺失：末班车早于轨道3小时</li>
+        <li>轨交接驳低效：最近轨道站步行距离＞500米</li>
+    </ul>
+
+    <div class="chart-container">
+        <canvas id="timeFlowChart"></canvas>
+    </div>
+</section>
+
+    <h2>二、客流特征</h2>
+ <div class="container">
+        <!-- 图表1：到站频率与满载率关系 -->
+        <div class="chart-box">
+            <canvas id="frequencyLoadChart"></canvas>
+        </div>
+      
+    <h3>1.时间维度客流特征</h3>
+     <div class="chart-card">
+    <div class="chart-container">
+        <canvas id="timeChart"></canvas>
+        <div class="data-marker"style="top:15%;left:15%" >早高峰满载率>80%，晚高峰反向客流缺口达40%</div>
+        <div class="data-marker"style="top:15%;left:15%" >夏季早高峰提前至6:00，冬季晚高峰集中度提升30%</div>
+        <div class="data-marker"style="top:15%;left:15%" >雨雾天气准点率下降至58%，延误率增加2.5倍</div>
+    </div>
+</div>
+
+      <h3>2.空间维度客流特征</h3>
+<div class="chart-card">
+    <div class="chart-container">
+        <canvas id="radarChart"></canvas>
+       <div class="data-marker"style="top:15%;left:15%" >低效站点资源利用率不足20%，日均客流＜15人</div>
+    </div>
+</div>
+</section>
+   
+<!-- 方案对比 -->
+    <div class="section">
+        <h2>三、方案对比</h2>
+        <h3>1.优化方案核心措施对比</h3>
+        <table>
+            <tr class="highlight">
+                <th>维度</th>
+                <th>方案一：全场景覆盖方案</th>
+                <th>方案二：精益化运营方案</th>
+            </tr>
+            <tr>
+                <td>核心措施</td>
+                <td>
+                    <ul>
+                        <li>新增云满庭站、风临洲站，裁撤低效站点</li>
+                        <li>延伸终点至山千院东苑首末站</li>
+                        <li>分夏令/冬令时运营（末班延后2小时）</li>
+                        <li>高峰期投入12米级LNG车辆</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>开行高峰快巴（动态跳站算法）</li>
+                        <li>平峰期短交路运营+8米电动车</li>
+                        <li>部署5G智能候车亭（AR导航）</li>
+                        <li>开发预约式接驳小程序</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 运营效率提升 -->
+    <div class="section">
+        <h3>2.运营效率提升对比</h3>
+        <div class="chart-container">
+            <div class="chart">
+                <h3>方案一关键指标提升</h3>
+                <table>
+                    <tr><th>指标</th><th>现状</th><th>目标</th><th>提升幅度</th></tr>
+                    <tr><td>高峰运营速度</td><td>10.2km/h</td><td>15km/h</td><td>+47%</td></tr>
+                    <tr><td>准点率</td><td>58%</td><td>90%</td><td>+32%</td></tr>
+                    <tr><td>车辆日均生产率</td><td>850</td><td>1200</td><td>+41%</td></tr>
+                </table>
+            </div>
+            <div class="chart">
+                <h3>方案二关键指标提升</h3>
+                <table>
+                    <tr><th>指标</th><th>现状</th><th>目标</th><th>提升幅度</th></tr>
+                    <tr><td>高峰单程耗时</td><td>38分钟</td><td>25分钟</td><td>-34%</td></tr>
+                    <tr><td>空驶能耗</td><td>基准值</td><td>降低30%</td><td>-30%</td></tr>
+                    <tr><td>响应时间</td><td>未实现</td><td>≤8分钟</td><td>100%</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+<h4>运营效率提升图</h4>
+        <div class="chart-container">
+            <canvas id="speedChart"></canvas>
+        </div>
+        <ul>
+            <li><span class="highlight">高峰快巴：</span>停靠8站，发车间隔6分钟，单程耗时≤25分钟</li>
+            <li><span class="highlight">动态调度：</span>平峰期按客座率>60%触发区间车，空驶能耗降低30%</li>
+        </ul>
+    </section>
+
+    <!-- 评价指标 -->
+    <div class="section">
+        <h2>四、全要素评价指标</h2>
+        <h3>1. 运营效率类指标（CJJ/T 114-2017）</h3>
+        <table>
+            <tr><th>指标</th><th>现状</th><th>优化目标</th><th>数据来源</th></tr>
+            <tr><td>高峰运营速度</td><td>10.2km/h</td><td>≥15km/h</td><td>GPS轨迹</td></tr>
+            <tr><td>准点率</td><td>58%</td><td>≥90%</td><td>调度系统</td></tr>
+            <tr><td>空驶率</td><td>32%</td><td>≤20%</td><td>GPS分析</td></tr>
+        </table>
+
+        <h3>2. 服务质量类指标（GB/T 22484-2022）</h3>
+        <table>
+            <tr><th>指标</th><th>现状</th><th>目标</th><th>评估方式</th></tr>
+            <tr><td>候车时间标准差</td><td>12分钟</td><td>≤6分钟</td><td>APP数据</td></tr>
+            <tr><td>无障碍服务达标率</td><td>0%</td><td>100%</td><td>专项验收</td></tr>
+        </table>
+
+        <h3>3. 可持续发展类指标</h3>
+        <table>
+            <tr><th>指标</th><th>现状</th><th>目标</th><th>政策依据</th></tr>
+            <tr><td>清洁能源车辆占比</td><td>30%</td><td>100%</td><td>重庆十四五规划</td></tr>
+            <tr><td>人均碳排放</td><td>0.12kg/人</td><td>≤0.08kg/人</td><td>能耗监测</td></tr>
+        </table>
+    </div>
+<!--方案对比与实施挑战 -->
+<section>
+    <h2>五、方案对比与实施挑战</h2>
+
+    
+    <h3>1.综合评价指标对比</h3>
+    <table>
+        <tr><th>指标</th><th>方案一</th><th>方案二</th><th>标准</th></tr>
+        <tr><td>运营速度</td><td>15km/h</td><td>18km/h</td><td>≥15km/h</td></tr>
+        <tr><td>准点率</td><td>90%</td><td>85%</td><td>≥90%</td></tr>
+        <tr><td>碳排放</td><td>0.08kg/人</td><td>0.05kg/人</td><td>≤0.08kg/人</td></tr>
+    </table>
+   <!-- 评价方法对比 -->
+         <div class="dashboard">
+  <!-- AHP分析区块 -->
+        <div class="card">
+     <h3>2.层次分析法（AHP）对比</h3>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="color-block" style="background: #e74c3c;">
+</div>
+                    <span>方案一</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-block" style="background: #3498db;">
+</div>
+                    <span>方案二</span>
+                </div>
+            </div>
+            <canvas id="ahpRadar"></canvas>
+            <table>
+                <tr><th>关键指标</th><th>方案一</th><th>方案二</th></tr>
+                <tr><td>服务性得分</td><td>40%</td><td>35%</td></tr>
+                <tr><td>经济性得分</td><td>35%</td><td>40%</td></tr>
+                <tr><td>可持续性得分</td><td>25%</td><td>30%</td></tr>
+            </table>
+        </div>
+
+        <!-- DEA分析区块 -->
+        <div class="card">
+            <h3>3.数据包络分析（DEA）效率前沿</h3>
+            <canvas id="deaScatter"></canvas>
+            <table>
+                <tr><th>效率类型</th><th>方案一</th><th>方案二</th></tr>
+                <tr><td>技术效率</td><td>0.78</td><td>0.92</td></tr>
+                <tr><td>规模效率</td><td>0.85（递减）</td><td>0.95（不变）</td></tr>
+                <tr><td>投入成本</td><td>450万</td><td>120万</td></tr>
+            </table>
+        </div>
+
+        <!-- 三维度局限性分析 -->
+        <div class="card" style="grid-column: span 2;">
+            <h3>4.三维度局限性分析矩阵</h3>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                <div>
+                    <h4>🔧 技术维度</h4>
+                    <ul>
+                        <li>方案一：LNG车辆续航限制（12小时）</li>
+                        <li>方案二：5G设备维护复杂度高</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>💰 经济维度</h4>
+                    <ul>
+                        <li>方案一：初期投资占预算9%</li>
+                        <li>方案二：120万电动车辆采购压力</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>🏗️ 实施维度</h4>
+                    <ul>
+                        <li>方案一：轨道审批周期＞3个月</li>
+                        <li>方案二：专用道客流门槛3000人次</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <h5>方案综合评价对比</h5>
+            <canvas id="ahpChart"></canvas>
+            <table>
+                <tr><th>评价方法</th><th>方案一</th><th>方案二</th></tr>
+                <tr><td>AHP综合得分</td><td>76.2</td><td>78.55</td></tr>
+                <tr><td>DEA技术效率</td><td>0.78</td><td>0.92</td></tr>
+                <tr><td>DEA规模效率</td><td>0.85（递减）</td><td>0.95（不变）</td></tr>
+            </table>
+        </div>
+
+        <!-- 三维度局限性分析 -->
+        <div class="card">
+            <h4>方案局限性分析</h4>
+            <div class="dimension">技术维度</div>
+            <ul>
+                <li>方案一：LNG车辆续航限制（12小时）影响夜间服务扩展</li>
+                <li>方案二：智能设备维护复杂，5G候车亭单套成本达20万元</li>
+            </ul>
+            
+            <div class="dimension">经济维度</div>
+            <ul>
+                <li>方案一：初期投资高达450万（占企业年预算9%）</li>
+                <li>方案二：纯电动车辆需一次性支付120万采购压力</li>
+            </ul>
+
+            <div class="dimension">实施维度</div>
+            <ul>
+                <li>方案一：需轨道集团审批（周期＞3个月）</li>
+                <li>方案二：专用道设置需满足3000人次/小时客流门槛</li>
+            </ul>
+        </div>
+
+        <!-- 改进方向可视化 -->
+        <div class="card">
+            <h2>六、改进方向与实施路径</h2>
+            <canvas id="roadmapChart"></canvas>
+            <table>
+                <tr><th>阶段</th><th>方案一改进</th><th>方案二改进</th></tr>
+                <tr><td>短期（0-6月）</td><td>-</td><td>部署智能候车亭，优化预约接驳</td></tr>
+                <tr><td>中期（1-2年）</td><td>改造接驳站，申请夜间补贴</td><td>利用节余资金优化服务</td></tr>
+                <tr><td>长期（3-5年）</td><td>全面电动化改造</td><td>推动政策协同立法</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="passengerChart"></canvas>
+    </div>
+</section>
+
+<script>
+  // 时间维度客流特征图表
+    new Chart(document.getElementById('timeFlowChart'), {
+        type: 'line',
+        data: {
+            labels: ['6:00', '8:00', '10:00', '12:00', '14:00', '16:00','18:00'],
+            datasets: [{
+                label: '上行客流量',
+                data: [120, 850, 300, 200, 400, 600,500],
+                borderColor: '#3498db'
+            },{
+                label: '下行客流量',
+                data: [80, 500, 250, 180, 350, 450,470],
+                borderColor: '#e74c3c'
+            }]
+        }
+    });
+
+  // 数据提取与计算（基于Excel表格和文档描述）
+        // 假设额定载客量为50人（根据实际需求调整）
+        const CAPACITY = 50;
+
+        // 数据1：各时段到站频率（班次/小时）与满载率
+        const timeLabels = ["早高峰 (6:30-9:00)", "平峰 (9:00-16:00)", "晚高峰 (17:00-19:30)"];
+        const frequencyData = [2, 1.5, 1.8]; // 班次/小时（假设值）
+        const loadRateData = [85, 40, 65];    // 满载率（%）（结合文档与实际数据估算）
+
+        // 数据2：各时段客流量估算（人/小时）
+        const hourlyFlow = [
+            frequencyData[0] * CAPACITY * (loadRateData[0]/100),  // 早高峰
+            frequencyData[1] * CAPACITY * (loadRateData[1]/100), // 平峰
+            frequencyData[2] * CAPACITY * (loadRateData[2]/100)   // 晚高峰
+        ];
+
+        // 图表1：到站频率与满载率关系
+        const ctx1 = document.getElementById('frequencyLoadChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: timeLabels,
+                datasets: [{
+                    label: '到站频率（班次/小时）',
+                    data: frequencyData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    yAxisID: 'y'
+                }, {
+                    label: '满载率（%）',
+                    data: loadRateData,
+                    backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    yAxisID: 'y1',
+                    type: 'line'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: { display: true, text: '到站频率与满载率关系（分时段）', font: { size: 16 } },
+                    legend: { position: 'top' }
+                },
+                scales: {
+                    y: { 
+                        title: { display: true, text: '班次/小时' },
+                        beginAtZero: true
+                    },
+                    y1: {
+                        position: 'right',
+                        title: { display: true, text: '满载率（%）' },
+                        beginAtZero: true,
+                        grid: { drawOnChartArea: false }
+                    }
+                }
+            }
+        });
+
+
+ // 时间维度复合图表
+    new Chart(document.getElementById('timeChart'), {
+        type: 'line',
+        data: {
+            labels: ['6:00','8:00','10:00','12:00','14:00','16:00','18:00','20:00'],
+            datasets: [
+                {
+                    label: '工作日客流',
+                    data: [50, 850, 600, 400, 550, 900, 1100, 300,400],
+                    borderColor: '#2c3e50',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    yAxisID: 'y'
+                },
+                {
+                    label: '周末客流',
+                    data: [30, 400, 850, 1100, 950, 800, 600, 200],
+                    borderColor: '#3498db',
+                    borderWidth: 2,
+                    tension: 0.3,
+                    yAxisID: 'y'
+                },
+                {
+                    label: '雨雾天气影响',
+                    data: [0, 0.7, 0.6, 0.3, 0.4, 0.5, 0.8, 0.2],
+                    backgroundColor: 'rgba(52,152,219,0.15)',
+                    borderColor: 'transparent',
+                    yAxisID: 'y1',
+                    type: 'bar'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            scales: {
+                y: {
+                    title: { text: '客流量（人次）', display: true },
+                    grid: { color: 'rgba(0,0,0,0.05)' }
+                },
+                y1: {
+                    position: 'right',
+                    title: { text: '天气影响指数', display: true },
+                    grid: { drawOnChartArea: false },
+                    max: 1
+                }
+            },
+            plugins: {
+                tooltip: {
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    titleFont: { size: 14 },
+                    bodyFont: { size: 12 }
+                }
+            }
+        }
+    });
+
+  // 空间维度雷达图
+    new Chart(document.getElementById('radarChart'), {
+        type: 'radar',
+        data: {
+            labels: ['融侨半岛','苹果城','南亚站','骏逸天下','桃源路','揽湖路'],
+            datasets: [
+                {
+                    label: '客流强度',
+                    data: [95, 85, 75, 90, 60, 30],
+                    borderColor: '#27ae60',
+                    backgroundColor: 'rgba(39,174,96,0.2)',
+                    pointRadius: 5,
+                    tension: 0.3
+                },
+                {
+                    label: '资源利用率',
+                    data: [70, 75, 85, 95, 45, 20],
+                    borderColor: '#f39c12',
+                    backgroundColor: 'rgba(243,156,18,0.2)',
+                    pointRadius: 5,
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(0,0,0,0.1)' },
+                    pointLabels: { font: { size: 13 } }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { font: { size: 14 } }
+                }
+            }
+        }
+    });
+  
+    // 运营效率对比图表
+    new Chart(document.getElementById('efficiencyChart'), {
+        type: 'bar',
+        data: {
+            labels: ['方案一', '方案二'],
+            datasets: [{
+                label: '投资成本（万元）',
+                data: [450, 120],
+                backgroundColor: '#2ecc71'
+            },{
+                label: '运营速度（km/h）',
+                data: [15, 18],
+                backgroundColor: '#f1c40f'
+            }]
+        }
+    });
+
+// 运营速度对比折线图
+        new Chart(document.getElementById('speedChart'), {
+            type: 'line',
+            data: {
+                labels: ['高峰时段', '平峰时段'],
+                datasets: [
+                    { label: '现状速度', data: [10.2, 12], borderColor: '#e74c3c' },
+                    { label: '目标速度', data: [15, 18], borderColor: '#2ecc71' }
+                ]
+            },
+            options: { responsive: true }
+        });
+
+
+ // AHP对比雷达图
+    new Chart(document.getElementById('ahpChart'), {
+        type: 'radar',
+        data: {
+            labels: ['服务性', '经济性', '可持续性'],
+            datasets: [{
+                label: '方案一',
+                data: [40, 35, 25],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)'
+            },{
+                label: '方案二',
+                data: [35, 40, 30],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)'
+            }]
+        }
+    });
+
+     // 实施路线图
+    new Chart(document.getElementById('roadmapChart'), {
+        type: 'line',
+        data: {
+            labels: ['2023Q3', '2024Q2', '2025Q4'],
+            datasets: [{
+                label: '方案一实施进度',
+                data: [20, 60, 95],
+                borderColor: '#e74c3c'
+            },{
+                label: '方案二实施进度',
+                data: [45, 80, 100],
+                borderColor: '#3498db'
+            }]
+        }
+    });
+
+ // AHP雷达图配置
+    new Chart(document.getElementById('ahpRadar'), {
+        type: 'radar',
+        data: {
+            labels: ['覆盖盲区率', '轨交接驳', '候车时间', '夜间服务', '投资成本', '运营成本'],
+            datasets: [{
+                label: '方案一',
+                data: [90, 85, 75, 95, 60, 70],
+                borderColor: '#e74c3c',
+                backgroundColor: 'rgba(231, 76, 60, 0.2)'
+            },{
+                label: '方案二',
+                data: [70, 80, 85, 60, 85, 80],
+                borderColor: '#3498db',
+                backgroundColor: 'rgba(52, 152, 235, 0.2)'
+            }]
+        },
+        options: {
+            scales: { r: { beginAtZero: true, max: 100 } }
+        }
+    });
+
+    // DEA散点图配置
+    new Chart(document.getElementById('deaScatter'), {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: '方案一',
+                data: [{x: 450, y: 1.56}],
+                backgroundColor: '#e74c3c',
+                pointRadius: 10
+            },{
+                label: '方案二',
+                data: [{x: 120, y: 1.2}],
+                backgroundColor: '#3498db',
+                pointRadius: 10
+            }]
+        },
+        options: {
+            scales: {
+                x: { 
+                    title: { display: true, text: '投入成本（万元）' },
+                    min: 0, max: 500
+                },
+                y: { 
+                    title: { display: true, text: '运输效率（万人次）' },
+                    min: 0, max: 2.0
+                }
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>
